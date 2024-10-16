@@ -1,0 +1,149 @@
+TASKS:
+
+1. CREATE TABLE Employees ( EmployeeID INT PRIMARY KEY, FirstName VARCHAR(50) , LastName VARCHAR(50) , DateOfBirth DATE , Department VARCHAR(100),);
+
+2. CREATE TABLE Orders ( OrderID INT PRIMARY KEY, OrderDate DATE, CustomerID INT, Amount DECIMAL(10, 2));
+
+3. INSERT INTO Employees (EmployeeID, FirstName, LastName, DateOfBirth, Department) VALUES (1, 'Nandhu', 'Chowdary', '03-01-2004', 'BTech');
+
+4. INSERT INTO Orders (order_id, item, amount, customer_id) VALUES (1, 'Keyboard', 400, 4), (2, 'Mouse', 300, 4), (3, 'Monitor', 12000, 3), (4, 'Keyboard', 400, 1), (5, 'Mousepad', 250, 2);
+
+5. SELECT * FROM Employees;
+
+6. SELECT * FROM Orders;
+
+7. SELECT FirstName, LastName FROM Employees;
+
+8. SELECT order_id, amount FROM Orders;
+
+9. UPDATE Employees SET Department = 'Finance' WHERE EmployeeID = 1;
+
+10. UPDATE Orders SET amount = 500.00 WHERE order_id = 2;
+
+11. DELETE FROM Employees WHERE EmployeeID = 1;
+
+12. DELETE FROM Orders WHERE amount < 100;
+
+13. SELECT * FROM Employees WHERE Department = 'HR';
+
+14. SELECT * FROM Orders WHERE amount > 300;
+
+15. SELECT * FROM Employees WHERE Department = 'HR' AND DateOfBirth > '1990-01-01';
+
+16. SELECT * FROM Orders WHERE amount > 300 AND OrderDate < '2023-01-01';
+
+17. SELECT * FROM Employees WHERE Department = 'HR' OR Department = 'Finance';
+
+18. SELECT * FROM Orders WHERE amount < 100 OR OrderDate > '2023-01-01';
+
+19. SELECT * FROM Employees ORDER BY LastName ASC;
+
+20. SELECT * FROM Orders ORDER BY Amount DESC;
+
+21. SELECT COUNT(*) AS TotalEmployees FROM Employees;
+
+22. SELECT COUNT(*) AS TotalOrders FROM Orders;
+
+23. SELECT AVG(Amount) AS AverageOrderAmount FROM Orders;
+
+24. SELECT AVG(YEAR(CURRENT_DATE) - YEAR(DateOfBirth)) AS AverageEmployeeAge FROM Employees;
+
+25. SELECT Department, COUNT(*) AS EmployeeCount FROM Employees GROUP BY Department;
+
+26. SELECT CustomerID, SUM(Amount) AS TotalOrderAmount FROM Orders GROUP BY CustomerID;
+
+27. SELECT Department, COUNT(*) AS EmployeeCount FROM Employees GROUP BY Department HAVING COUNT(*) > 5;
+
+28. SELECT CustomerID, SUM(Amount) AS TotalOrderAmount FROM Orders GROUP BY CustomerID HAVING SUM(Amount) > 1000;
+
+29. SELECT E.FirstName, E.LastName, O.Amount FROM Employees E INNER JOIN Orders O ON E.EmployeeID = O.CustomerID;
+
+30. SELECT E.FirstName, E.LastName, O.Amount FROM Employees E LEFT JOIN Orders O ON E.EmployeeID = O.CustomerID;
+
+
+PROJECT:
+
+Create collections for products, suppliers, and inventory:
+
+1. CREATE TABLE Products (ProductID INT PRIMARY KEY, Name VARCHAR(255), SupplierID INT, Quantity INT, Category VARCHAR(255), Price DECIMAL(10, 2));
+
+2. CREATE TABLE Suppliers (SupplierID INT PRIMARY KEY, Name VARCHAR(255), Address VARCHAR(255));
+
+3. CREATE TABLE Inventory (InventoryID INT PRIMARY KEY, ProductID INT,Quantity INT, ReorderLevel INT, ReorderStatus BOOLEAN);
+
+4. CREATE TABLE Shipments (ShipmentID INT PRIMARY KEY, ProductID INT, SupplierID INT, Quantity INT, Date DATE);
+
+5. CREATE TABLE Orders (OrderID INT PRIMARY KEY, ProductID INT, Quantity INT, Date DATE);
+
+
+
+Insert products with details like ProductID, Name, SupplierID, and Quantity:
+
+1. INSERT INTO Products (ProductID, Name, SupplierID, Quantity, Category, Price) VALUES (1, 'Product A', 1, 100, 'Electronics', 99.99), (2, 'Product B', 2, 50, 'Fashion', 19.99), (3, 'Product C', 1, 200, 'Electronics', 149.99);
+
+
+
+Query to select all products supplied by a specific supplier:
+
+1. SELECT P.* FROM Products P JOIN Suppliers S ON P.SupplierID = S.SupplierID WHERE S.SupplierID = 1;
+
+
+
+Update inventory levels when a shipment is received:
+
+1. UPDATE Inventory SET Quantity = Quantity + S.Quantity FROM Inventory JOIN Shipments S ON Inventory.ProductID = S.ProductID;
+
+
+
+Delete products that are no longer sold:
+
+1. DELETE FROM Products WHERE ProductID NOT IN (SELECT ProductID FROM Orders);
+
+
+
+Filter products based on stock level and reorder status:
+
+1. SELECT * FROM Inventory WHERE Quantity < ReorderLevel AND ReorderStatus = TRUE;
+
+
+
+Use AND/OR to filter products by category and price range:
+
+1. SELECT * FROM Products WHERE Category = 'Electronics' AND Price BETWEEN 50 AND 200;
+
+
+
+Sort products by stock quantity:
+
+1. SELECT * FROM Inventory ORDER BY Quantity DESC;
+
+
+
+Use aggregate functions to count the total number of shipments:
+
+1. SELECT COUNT(*) FROM Shipments;
+
+
+
+Group inventory by category and calculate the total stock value for each category:
+
+1. SELECT Category, SUM(Quantity * Price) AS TotalStockValue FROM Inventory
+2. JOIN Products ON Inventory.ProductID = Products.ProductID GROUP BY Category;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
